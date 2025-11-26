@@ -1,0 +1,165 @@
+<!-- <!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Employee of the Month — Lucky Spinner (Mast Version)</title>
+  <link rel="stylesheet" href="spinner.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <h1>Employee of the Month — <span class="accent">Lucky Spinner</span></h1>
+        <p class="muted">नाम डालो और SPIN करो — देखो किसको भाग्य मिलता है! 🎉</p>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div class="left">
+        <div class="wheel-wrap">
+          <svg class="pointer" viewBox="0 0 60 60" aria-hidden="true">
+            <defs>
+              <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity="0.18"/>
+              </filter>
+            </defs>
+            <g filter="url(#shadow)">
+              <path d="M30 54 L42 34 L30 38 L18 34 Z" fill="#ff3b30" stroke="#8b1e1e" stroke-width="1"/>
+            </g>
+          </svg>
+
+          <canvas id="wheelCanvas" role="img" aria-label="Lucky wheel"></canvas>
+
+          Center badge with logo (uses uploaded image) 
+          <div class="center-badge">
+            <img src="ORIGINAL LOGO SVG WITH BOTTOM CIRCLE.svg" alt="logo" class="center-logo" />
+            <div class="center-text">SPIN</div>
+          </div>
+
+          confetti canvas overlay 
+          <canvas id="confettiCanvas" class="confetti"></canvas>
+        </div>
+
+        <div class="controls">
+          <input id="employeeName" placeholder="Employee name" />
+          <div class="buttons">
+            <button id="spinBtn" class="btn primary">SPIN</button>
+            <button id="resetBtn" class="btn">RESET LOG</button>
+          </div>
+          <div class="small muted">Mast animation + sound + confetti. Audit mode भी है।</div>
+        </div>
+      </div>
+
+      <aside class="right">
+        <h2>Recent winners</h2>
+        <div class="actions">
+          <button id="exportCSV" class="btn primary">Export CSV</button>
+          <button id="downloadCert" class="btn">Download Certificate (PNG)</button>
+        </div>
+
+        <div class="logwrap">
+          <table id="logTable" aria-live="polite">
+            <thead><tr><th>#</th><th>Name</th><th>Reward</th><th>Time</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="settings">
+          <label><input id="auditMode" type="checkbox" /> Audit Mode (show spin info)</label>
+        </div>
+      </aside>
+    </section>
+
+    <div id="modal" class="modal" role="dialog" aria-hidden="true">
+      <div class="modal-card">
+        <h3 id="resultTitle"></h3>
+        <div id="resultTag" class="result-tag"></div>
+        <div id="resultMeta" class="small muted"></div>
+        <div style="margin-top:14px;">
+          <button id="closeModal" class="btn primary">OK</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="spinner.js"></script>
+</body>
+</html> -->
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lucky Spinner — Employee of the Month</title>
+  <link rel="stylesheet" href="spinner.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <h1>Employee of the Month — Lucky Spinner</h1>
+      <p class="sub">SPIN AND TAKE YOUR OPPORTUNITY!!!!!</p>
+    </header>
+
+    <section class="panel">
+      <div class="left">
+        <div id="wheelWrap" class="wheel-wrap">
+          <div id="topPointer" class="pointer" aria-hidden="true">
+            <!-- upside-down arrow points downwards to wheel (we place it above) -->
+            <svg viewBox="0 0 60 60" width="56" height="56" aria-hidden="true">
+              <path d="M30 54 L42 34 L30 38 L18 34 Z" fill="#ff4d4f" stroke="#c83b3b"/>
+            </svg>
+          </div>
+
+          <canvas id="wheelCanvas" role="img" aria-label="Lucky wheel"></canvas>
+          <canvas id="confettiCanvas" class="confetti"></canvas>
+
+          <!-- centerLogo invisible in DOM, drawn into canvas -->
+          <img id="centerLogo" src="ORIGINAL LOGO SVG WITH BOTTOM CIRCLE.svg" alt="logo" style="display:none" />
+
+        </div>
+
+        <div class="controls">
+          <input id="employeeName" placeholder="Employee name (जैसे: Rahul Kumar)" />
+          <div class="buttons">
+            <button id="spinBtn" class="btn primary">SPIN</button>
+            <button id="resetBtn" class="btn ghost">RESET LOG</button>
+          </div>
+          <div class="note">Labels horizontal, small font. Arrow fixed top. Refresh Ctrl+F5 if you see old version.</div>
+        </div>
+      </div>
+
+      <aside class="right">
+        <h2>Recent winners</h2>
+        <div class="actions">
+          <button id="exportCSV" class="btn primary">Export CSV</button>
+          <button id="downloadCert" class="btn ghost">Download Certificate (PNG)</button>
+        </div>
+
+        <div class="logwrap">
+          <table aria-live="polite">
+            <thead><tr><th>#</th><th>Name</th><th>Reward</th><th>Time</th></tr></thead>
+            <tbody id="logTable"></tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:8px"><label><input id="auditMode" type="checkbox" /> Audit Mode (show seed/index)</label></div>
+      </aside>
+    </section>
+
+    <div id="modal" class="modal" aria-hidden="true">
+      <div class="modal-card">
+        <h3 id="resultTitle"></h3>
+        <div id="resultTag" style="font-weight:800;margin-top:8px"></div>
+        <div id="resultMeta" class="muted small" style="margin-top:8px"></div>
+        <div style="margin-top:12px;"><button id="closeModal" class="btn primary">OK</button></div>
+      </div>
+    </div>
+  </main>
+<footer class="footer">
+  © 2025 Gagan Goswami — All Rights Reserved.
+</footer>
+
+  <script src="spinner.js"></script>
+</body>
+</html>
